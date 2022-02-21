@@ -20,7 +20,7 @@ class TaskWidget extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
-          color: Colors.grey.withOpacity(0.08),
+          color: const Color(0xffe9f5f9),
           borderRadius: BorderRadius.circular(5),
         ),
         child: Row(

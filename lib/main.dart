@@ -22,10 +22,10 @@ class MyApp extends ConsumerWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primaryColor: const Color(0xff6886C5),
-        bottomNavigationBarTheme: const BottomNavigationBarThemeData(selectedItemColor: Color(0xff6886C5)),
+        primaryColor: const Color(0xff51abcb),
+        bottomNavigationBarTheme: const BottomNavigationBarThemeData(selectedItemColor: Color(0xff51abcb)),
         scaffoldBackgroundColor: const Color(0xffF1F9F9),
-        floatingActionButtonTheme: const FloatingActionButtonThemeData(backgroundColor: Color(0xff6886C5)),
+        floatingActionButtonTheme: const FloatingActionButtonThemeData(backgroundColor: Color(0xff51abcb)),
         textTheme: GoogleFonts.openSansTextTheme(),
       ),
       home: StreamBuilder(

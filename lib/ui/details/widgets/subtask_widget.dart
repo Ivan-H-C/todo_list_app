@@ -48,7 +48,15 @@ class _SubTaskWidgetState extends State<SubTaskWidget> {
             controller: controller,
             focusNode: focusNode,
             onSubmitted: widget.onChangeTitle,
-            decoration: const InputDecoration(border: InputBorder.none),
+            decoration: const InputDecoration(
+              border: InputBorder.none,
+            ),
+            style: widget.subTask.done
+                ? const TextStyle(
+                    color: Colors.grey,
+                    decoration: TextDecoration.lineThrough,
+                  )
+                : null,
           ),
         ),
         const Icon(Icons.drag_handle),
