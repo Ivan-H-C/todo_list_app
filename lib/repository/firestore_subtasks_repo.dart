@@ -14,9 +14,9 @@ class FirestoreSubTaskRepo implements SubTasksRepository {
   late final CollectionReference<SubTask> _subTasksRef;
   
   @override
-  Future<void> addSubTask() async {
+  Future<void> addSubTask(String rank) async {
     final subTaskRef = _subTasksRef.doc();
-    final subTask = SubTask(id: subTaskRef.id, title: '', done: false);
+    final subTask = SubTask(id: subTaskRef.id, rank: rank,title: '', done: false);
     await subTaskRef.set(subTask);
   }
 
@@ -25,7 +25,7 @@ class FirestoreSubTaskRepo implements SubTasksRepository {
 
   @override
   Stream<List<SubTask>> streamSubTasks() {
-    final snaphots = _subTasksRef.snapshots();
+    final snaphots = _subTasksRef.orderBy('rank').snapshots();
     return snaphots.map((snapshot) => snapshot.docs.map((doc) => doc.data()).toList());
   }
 

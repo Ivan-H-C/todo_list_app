@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:todo_list_app/models/sub_task.dart';
 import 'package:todo_list_app/models/task.dart';
+import 'package:todo_list_app/providers/providers.dart';
 import 'package:todo_list_app/ui/common_widgets/categories.dart';
 import 'package:todo_list_app/ui/common_widgets/save_category_widget.dart';
 import 'package:todo_list_app/ui/details/widgets/sub_tasks_list.dart';
@@ -78,26 +80,40 @@ class TaskDetailsPage extends ConsumerWidget {
               Flexible(
                 child: SubTasksList(
                   taskID: task.id,
+                  onReorder: taskViewModel.reorderSubTask,
                 ),
               ),
               const SizedBox(height: 20),
-              InkWell(
-                onTap: () => taskViewModel.addSubTask(),
-                child: Row(
-                  children: [
-                    const Icon(Icons.add),
-                    const SizedBox(width: 20),
-                    Text(
-                      'Add Sub-task',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                        color: Theme.of(context).primaryColor,
+              Consumer(builder: (context, ref, child) {
+                return InkWell(
+                  onTap: () {
+                    final subTasksAsyncValue = ref.watch(subTasksProvider(task.id));
+                    subTasksAsyncValue.whenData(
+                      (subTasks) {
+                        if (subTasks.isEmpty) {
+                          taskViewModel.addSubTask(lastRank: null);
+                        } else {
+                          taskViewModel.addSubTask(lastRank: subTasks.last.rank);
+                        }
+                      },
+                    );
+                  },
+                  child: Row(
+                    children: [
+                      const Icon(Icons.add),
+                      const SizedBox(width: 20),
+                      Text(
+                        'Add Sub-task',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          color: Theme.of(context).primaryColor,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
+                    ],
+                  ),
+                );
+              }),
               const Divider(),
               InkWell(
                 onTap: () async {
